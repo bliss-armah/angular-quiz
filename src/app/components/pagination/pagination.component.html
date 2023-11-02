@@ -1,0 +1,36 @@
+<div class="flex items-center justify-between mt-7 mb-36 sm:px-6">
+  <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+    <div>
+      <nav
+        class="isolate inline-flex -space-x-px rounded-md shadow-sm"
+        aria-label="Pagination"
+      >
+        <div
+          class="relative cursor-pointer inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+          (click)="decreasePage()"
+        >
+          &#x2039;
+        </div>
+        <div *ngFor="let pages of pageNumbers">
+          <a
+            key="{pageNumber}"
+            [attr.aria-current]="pages === page ? 'page' : null"
+            class="relative z-10 inline-flex items-center px-4 py-2 text-sm font-semibold focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+            [ngClass]="{
+              'bg-indigo-600 text-white': pages === page,
+              'text-indigo-600': pages !== page
+            }"
+          >
+            {{ pages }}
+          </a>
+        </div>
+        <div
+          class="relative cursor-pointer inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+          (click)="increasePage()"
+        >
+          &#8250;
+        </div>
+      </nav>
+    </div>
+  </div>
+</div>

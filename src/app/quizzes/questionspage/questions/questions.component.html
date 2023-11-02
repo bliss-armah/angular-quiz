@@ -1,0 +1,37 @@
+<div class="flex justify-center items-center">
+    <div class="flex flex-col justify-center items-center w-[80%]">
+      <app-pagination [paginationData]="questions.pagination" (decrease)="decreasePage()" (increase)="increasePage()" [page]="page" ></app-pagination>
+    <div class="flex justify-between mb-28 w-[100%]">
+      <div class="w-[60%]">
+        <div
+          key="{question._id}"
+          *ngFor="let question of allQuestions.questions; let i = index"
+        >
+          <h1 class="mb-16">{{ page }}. {{ question.question }}</h1>
+          <div class="grid grid-cols-2 gap-y-8 gap-x-28">
+            <label
+              *ngFor="let option of question.options"
+              htmlFor="{{ option }}"
+              class="flex justify-between px-4 py-2 border border-gray-300 rounded-[8px] w-full"
+            >
+              {{ option }}
+              <input
+                [(ngModel)]="text"
+                type="radio"
+                id="{{ option }}"
+                value="{{ option }}"
+                [name]="'radioGroup_' + i"
+                (change)="handleOptionChange(question._id, option)"
+              />
+            </label>
+          </div>
+        </div>
+      </div>
+      <div
+        class="w-[97px] h-[39px] bg-gray-300 text-gray-100 flex justify-center items-center rounded-sm"
+      >
+        10 points
+      </div>
+    </div> 
+  </div>
+</div>

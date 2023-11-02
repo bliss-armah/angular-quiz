@@ -1,0 +1,74 @@
+<nav
+  class="flex sm:items-center md:flex-row sm:flex-row justify-between md:just px-[70px] py-[18px] shadow-lg relative z-10"
+>
+  <img
+    (click)="onOpenMenu()"
+    class="sm:hidden cursor-pointer"
+    src="../../../assets/images/humburger.png"
+    alt=""
+  />
+  <img class="" src="../../../assets/images/logo.svg" alt="" />
+  <ul
+    class="hidden sm:flex items-center md:flex-row justify-between sm:w-[30%] text-[#0267FF]"
+  >
+    <li>
+      <a
+        routerLinkActive="active"
+        routerLink=""
+        class="cursor-pointer"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Home</a
+      >
+    </li>
+    <li>
+      <a routerLinkActive="active" routerLink="/services" class="cursor-pointer"
+        >Services</a
+      >
+    </li>
+    <li>
+      <a routerLinkActive="active" routerLink="/about" class="cursor-pointer"
+        >About Us</a
+      >
+    </li>
+    <li>
+      <a routerLinkActive="active" routerLink="/contact" class="cursor-pointer"
+        >Contact Us</a
+      >
+    </li>
+  </ul>
+  <div *ngIf="!isAuthenticated" class="hidden sm:flex items-center">
+    <button class="p-2 text-[#0267FF]" routerLink="/login">Login</button>
+    <button
+      class="p-2 bg-[#0267ff] border rounded-lg text-white ml-4"
+      routerLink="/login"
+    >
+      Register
+    </button>
+  </div>
+  <div *ngIf="isAuthenticated" class="hidden sm:flex items-center" clickedOutside (clickedOutside)="clickedOutside()">
+    <div class="flex items-center cursor-pointer" (click)="onOpenMenu()">
+      <h2 class="text-[#0267FF] capitalize font-semibold">Hello John Doe</h2>
+      <img src="../../../assets/images/image2.png" alt="" class="w-11 ml-4" />
+    </div>
+    <div
+      *ngIf="isMenuOpen"
+      class="absolute bg-white top-[81px] right-[60px] w-[276px] h-[223px] rounded-lg px-6 py-4"
+    >
+      <div class="flex items-center mb-4">
+        <img src="../../../assets/images/image2.png" alt="" class="w-14" />
+        <h2 class="capitalize font-semibold ml-4">Hello John Doe</h2>
+      </div>
+      <div class="w-full">
+        <div class="cursor-pointer mb-2" routerLinkActive="active" routerLink="/profile" class="cursor-pointer">Profile</div>
+        <div class="h-[1px] bg-gray-300 mb-2"></div>
+        <div class="cursor-pointer mb-2" routerLinkActive="active" routerLink="/settings">Account Settings</div>
+        <div class="h-[1px] bg-gray-300 mb-2"></div>
+        <div class="cursor-pointer" (click)="onLogout()">Logout</div>
+      </div>
+    </div>
+  </div>
+</nav>
+<!-- <div class="" *ngIf="isMenuOpen">
+  <app-dropmenu></app-dropmenu>
+</div> -->
+
