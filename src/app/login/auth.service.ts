@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Subject, catchError, tap } from 'rxjs';
+import { BehaviorSubject, catchError, tap } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
 import { User } from './user.model';
 import { Router } from '@angular/router';
 
@@ -13,7 +14,11 @@ export interface AuthResponseData {
 export class AuthService {
   user = new BehaviorSubject<User | null>(null);
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private cookieService: CookieService,
+    private router: Router
+  ) {}
 
   signUp(name: string, email: string, password: string) {
     return this.http
@@ -35,6 +40,7 @@ export class AuthService {
         })
       );
   }
+
   logIn(email: string, password: string) {
     return this.http
       .post<AuthResponseData>(
@@ -56,28 +62,30 @@ export class AuthService {
   }
 
   autoLogin() {
-    const userData: {
-      email: string;
-      token: string;
-    } = JSON.parse(localStorage.getItem('userData') || '{}');
-    if (!userData) {
-      return;
-    }
-    const loadedUser = new User(userData.email, userData.token);
-    if (loadedUser.tokens) {
-      this.user.next(loadedUser);
+    const email = this.cookieService.get('email');
+    const token = this.cookieService.get('token');
+
+    if (email && token) {
+      const loadedUser = new User(email, token);
+      if (loadedUser.tokens) {
+        this.user.next(loadedUser);
+      }
     }
   }
 
   logout() {
     this.user.next(null);
     this.router.navigate(['/login']);
-    localStorage.removeItem('userData');
+    this.cookieService.delete('email');
+    this.cookieService.delete('token');
   }
 
   private handleAuthentication(email: string, token: string) {
     const user = new User(email, token);
     this.user.next(user);
-    localStorage.setItem('userData', JSON.stringify(user));
+
+    // Set cookies
+    this.cookieService.set('email', email);
+    this.cookieService.set('token', token);
   }
 }

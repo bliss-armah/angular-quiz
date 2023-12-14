@@ -1,21 +1,33 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { map, tap } from 'rxjs';
-import { Quiz, Quizzes } from '../quizzes/quiz.model';
-import { AllQuizQ, AllQuizQnP, FilterQuestionProps, QuizQuestions, QuizQuestionsP } from '../types';
+import { HttpClient } from '@angular/common/http';
+import { map,  } from 'rxjs';
+import { Quizzes } from '../quizzes/quiz.model';
+import {  AllQuizQnP,  QuizQuestionsP } from '../types';
 
 @Injectable({ providedIn: 'root' })
 export class DataStorageService {
   constructor(private http: HttpClient) {}
   
+  total: any = []
 
+  sendAnswers(answers: any) {
+    return this.http
+      .post(
+        'https://user-auth-server.onrender.com/api/v1/quiz/totalMarks',
+        answers
+      ).pipe(
+        map((solutions) => {
+          return solutions;
+        })
+      );
+  }
 
   fetchQuizzes() {
     return this.http
       .get<Quizzes>('https://user-auth-server.onrender.com/api/v1/quiz')
       .pipe(
-        map((recipes) => {
-          return recipes;
+        map((quiz) => {
+          return quiz;
         })
       );
   }
@@ -24,9 +36,9 @@ export class DataStorageService {
     return this.http
       .get<AllQuizQnP>( `https://user-auth-server.onrender.com/api/v1/quiz/questions/${id}?page=${page}`)
       .pipe(
-        map((recipes) => {
+        map((quiz) => {
 
-          return recipes;
+          return quiz;
         })
       );
   }
@@ -35,10 +47,9 @@ fetchQ(id: string) {
   return this.http
       .get<QuizQuestionsP>( `https://user-auth-server.onrender.com/api/v1/quiz/question/${id}`)
       .pipe(
-        map((recipes) => {
-          console.log('',recipes);
-
-          return recipes.quiz;
+        map((quiz) => {
+          console.log('',quiz);
+          return quiz.quiz;
         })
       );
   }

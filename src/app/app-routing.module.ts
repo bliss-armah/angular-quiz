@@ -11,6 +11,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { GeneralComponent } from './settings/general/general.component';
 import { PasswordComponent } from './settings/password/password.component';
 import { QuizsettingsComponent } from './settings/quizsettings/quizsettings.component';
+import { SolutionsComponent } from './quizzes/solutions/solutions.component';
 
 const routes: Routes = [
   {
@@ -56,6 +57,10 @@ const routes: Routes = [
       {
         path: ':id',
         component: QuestionsComponent,
+      },
+      {
+        path: ':id/solutions',
+        component: SolutionsComponent,
       },
     ],
     canActivate: [AuthGuard],

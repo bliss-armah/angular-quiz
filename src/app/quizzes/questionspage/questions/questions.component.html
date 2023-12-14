@@ -1,11 +1,26 @@
-<div class="flex justify-center items-center">
-    <div class="flex flex-col justify-center items-center w-[80%]">
-      <app-pagination [paginationData]="questions.pagination" (decrease)="decreasePage()" (increase)="increasePage()" [page]="page" ></app-pagination>
+<div class="flex justify-center my-auto items-center">
+  <div
+    *ngIf="!isLoading"
+    class="flex flex-col justify-center items-center w-[80%]"
+  >
+    <pagination-controls
+      previousLabel="Prev"
+      nextLabel="Next"
+      (pageChange)="onTableDataChanged($event)"
+    ></pagination-controls>
     <div class="flex justify-between mb-28 w-[100%]">
       <div class="w-[60%]">
         <div
-          key="{question._id}"
-          *ngFor="let question of allQuestions.questions; let i = index"
+          *ngFor="
+            let question of allQuestions.questions
+              | paginate
+                : {
+                    itemsPerPage: tableSize,
+                    currentPage: pageNo,
+                    totalItems: count
+                  };
+            let i = index
+          "
         >
           <h1 class="mb-16">{{ page }}. {{ question.question }}</h1>
           <div class="grid grid-cols-2 gap-y-8 gap-x-28">
@@ -16,7 +31,7 @@
             >
               {{ option }}
               <input
-                [(ngModel)]="text"
+                [(ngModel)]="selectedAnswers[question._id]"
                 type="radio"
                 id="{{ option }}"
                 value="{{ option }}"
@@ -32,6 +47,14 @@
       >
         10 points
       </div>
-    </div> 
+    </div>
+    <button
+      (click)="getNextQuestion()"
+      class="bg-[#0267FF] text-white text-center px-[14px] py-2 w-[181px]"
+    >
+      {{ this.handleButtonLabelChange() }}
+    </button>
   </div>
+  <div class=""><app-loader *ngIf="isLoading"></app-loader></div>
+  <router-outlet></router-outlet>
 </div>

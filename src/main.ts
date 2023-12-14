@@ -4,9 +4,10 @@ import { importProvidersFrom } from "@angular/core";
 import { AppRoutingModule } from "./app/app-routing.module";
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
+import {NgxPaginationModule} from "ngx-pagination"
 
 bootstrapApplication(AppComponent,{
   providers: [
-    importProvidersFrom(AppRoutingModule,HttpClientModule,RouterModule )
+    importProvidersFrom(AppRoutingModule,HttpClientModule,RouterModule,NgxPaginationModule )
   ],
 });

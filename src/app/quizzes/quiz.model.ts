@@ -1,3 +1,4 @@
+
 export interface Quizzes {
    quiz:Quiz[]
   }
@@ -20,4 +21,5 @@ export interface Quiz {
   title: string;
   duration: number;
 }
+
 

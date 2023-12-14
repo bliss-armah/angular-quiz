@@ -1,3 +1,4 @@
+import { DataShareService } from './../../shared/dataShare.service';
 import { AuthService } from './../../login/auth.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -17,10 +18,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private userSub!: Subscription;
   isAuthenticated = false;
   isMenuOpen = false;
+  showHeader: boolean = true;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,private dataShareService:DataShareService) {}
 
   ngOnInit() {
+    this.dataShareService.showHeader$.subscribe((showHeader) => {
+      this.showHeader = showHeader;
+    });
+
     this.userSub = this.authService.user.subscribe((user) => {
       this.isAuthenticated = !!user;
     });

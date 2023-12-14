@@ -1,4 +1,4 @@
-import { Component, } from '@angular/core';
+import { Component} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../home/header/header.component';
 import { FooterComponent } from '../home/footer/footer.component';
@@ -11,7 +11,9 @@ import { RouterModule } from '@angular/router';
   templateUrl: './quizzes.component.html',
   styleUrls: ['./quizzes.component.css']
 })
-export class QuizzesComponent{
+
+export class QuizzesComponent   {
+ 
 
 }
  

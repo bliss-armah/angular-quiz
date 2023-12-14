@@ -1,22 +1,31 @@
+import { DataShareService } from './../../../shared/dataShare.service';
 import { DataStorageService } from 'src/app/shared/dataStorage.service';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { AllQuizQ, AllQuizQnP, AnswerQuestion, QuizQuestions } from 'src/app/types';
+import { AllQuizQ, AllQuizQnP, AnswerQuestion } from 'src/app/types';
 import { FormsModule, NgForm } from '@angular/forms';
 import { PaginationComponent } from 'src/app/components/pagination/pagination.component';
-import { Quiz } from '../../quiz.model';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { LoaderComponent } from 'src/app/components/loader/loader.component';
 
 @Component({
   selector: 'app-questions',
   standalone: true,
-  imports: [CommonModule, FormsModule, PaginationComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    PaginationComponent,
+    NgxPaginationModule,
+    RouterModule,
+    LoaderComponent
+  ],
   templateUrl: './questions.component.html',
   styleUrls: ['./questions.component.css'],
 })
 export class QuestionsComponent implements OnInit, OnDestroy {
-  subscription!: Subscription;
+  subscription: Subscription = new Subscription();
   questions!: AllQuizQnP;
   allQuestions!: AllQuizQ;
   text!: string;
@@ -26,39 +35,55 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   };
   quizId: string = '';
   page: number = 1;
+  submit = false;
+  pageNo = 1;
+  title = 'pagination';
+  count = 0;
+  tableSize = 1;
+  tableSizes = [5, 10, 15, 20];
+  data: any;
+  isLoading = false;
+  selectedAnswers: { [questionId: string]: string } = {};
+
 
   constructor(
+    private dataShareService: DataShareService,
     private dataStorageService: DataStorageService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
-
 
   ngOnInit(): void {
     this.route.params.subscribe((params: any) => {
       this.quizId = params['id'];
     });
-    this.fetchQuiz(this.quizId, this.page);
     this.fetchQ(this.quizId);
+    this.dataShareService.updateShowHeader(true);
   }
-
-
-  fetchQuiz(id: string, page: number) {
-    return this.dataStorageService
-      .fetchQuiz(id, page)
-      .subscribe((data) => {
-        this.questions = data;
-      });
-  }
-
 
   fetchQ(id: string) {
-    return this.dataStorageService
-      .fetchQ(id)
-      .subscribe((data) => {
-        this.allQuestions = data;
-      });
+    this.isLoading = true;
+    return this.dataStorageService.fetchQ(id).subscribe((data) => {
+      this.isLoading = false;
+      this.allQuestions = data;
+    });
   }
 
+  getNextQuestion() {
+    if (this.pageNo !== this.allQuestions.questions.length) {
+      this.submit = false;
+      this.pageNo++;
+      console.log(
+        'getNextQuestion',
+        this.pageNo,
+        this.allQuestions.questions.length - 1
+      );
+    } else {
+      this.handleSubmission();
+      console.log('object');
+      this.router.navigate(['quizzes', this.quizId, 'solutions']);
+    }
+  }
 
   handleOptionChange(questionId: string, option: string) {
     const existingAnswer = this.selectedOptions?.answers.find(
@@ -78,26 +103,28 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     }
   }
 
-  increasePage() {
-    this.page++;
-    this.fetchQuiz(this.quizId, this.page);
-    console.log(this.page, this.quizId);
-  }
-
-  decreasePage() {
-    if (this.page > 1) {
-      this.page--;
-      this.fetchQuiz(this.quizId, this.page);
-
-      console.log(this.page, this.quizId);
-    }
-    console.log(this.page, this.quizId);
-
-    return this.page;
+  getSelectedAnswer(questionId: string): string | undefined {
+    return this.selectedAnswers[questionId];
   }
 
   handleSubmission() {
-    console.log(this.selectedOptions);
+    return this.dataStorageService
+      .sendAnswers(this.selectedOptions)
+      .subscribe((data) => {
+        this.data = data;
+        this.dataShareService.setData(this.data);
+      });
+  }
+
+  handleButtonLabelChange() {
+    if (this.pageNo === this.allQuestions.questions.length) {
+      return 'Submit';
+    }
+    return 'Next';
+  }
+
+  onTableDataChanged(event: any) {
+    this.pageNo = event;
   }
 
   ngOnDestroy(): void {

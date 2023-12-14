@@ -19,137 +19,80 @@
     </button>
   </div>
 </div>
-<div class="px-[70px]">
-  <h3 class="text-[47.78px] font-semibold mb-[43px]">Hello John Doe</h3>
-  <div class="flex justify-between items-center mb-[43px]">
-    <app-card
-      [headText]="'Quiz log'"
-      [text]="'Review Your quiz results'"
-      imgUrl="../../assets/images/quizlog.png"
-    ></app-card>
-    <app-card
-      [bgColor]="'#0267FF'"
-      [headText]="'Quizzes'"
-      [text]="'Expand your knowledge'"
-      imgUrl="../../assets/images/quiz.png"
-    ></app-card>
-    <app-card
-      [bgColor]="'#0000CC'"
-      [headText]="'100+ subjects'"
-      [text]="'Challenge Your Knowledge'"
-      imgUrl="../../assets/images/quiz3.png"
-    ></app-card>
+<ng-container *ngIf="isLoading; else content">
+  <!-- Loading Text -->
+  <div class="flex justify-center mb-6">
+    <app-loader></app-loader>
   </div>
+</ng-container>
+<ng-template #content>
 
-  <div class="flex justify-between mb-7">
-    <div class="w-[40%] p-4 border shadow-xl rounded-lg">
-      <app-pie></app-pie>
+  <div *ngIf="!isLoading" class="px-[70px] ">
+    <h3 class="text-[47.78px] font-semibold mb-[43px]">Hello John Doe</h3>
+    <div class="flex justify-between items-center mb-[43px]">
+      <app-card
+        [headText]="'Quiz log'"
+        [text]="'Review Your quiz results'"
+        imgUrl="../../assets/images/quizlog.png"
+      ></app-card>
+      <app-card
+        [bgColor]="'#0267FF'"
+        [headText]="'Quizzes'"
+        [text]="'Expand your knowledge'"
+        imgUrl="../../assets/images/quiz.png"
+      ></app-card>
+      <app-card
+        [bgColor]="'#0000CC'"
+        [headText]="'100+ subjects'"
+        [text]="'Challenge Your Knowledge'"
+        imgUrl="../../assets/images/quiz3.png"
+      ></app-card>
     </div>
-    <div class="w-[57%] p-4 border shadow-xl rounded-lg">
-      <app-bar></app-bar>
-    </div>
-  </div>
-  <div class="flex justify-between">
-    <div class="w-[50%] h-4 pt-10">
-     <app-calendar></app-calendar>
-    </div>
-    <div class="pt-10 w-[30%]">
-      <div class="flex justify-between items-center mb-6">
-        <p class="text-2xl font-semibold">Recent Quizzes</p>
-        <p class="text-[#0267FF] cursor-pointer" routerLink="/quizzes">See All</p>
+  
+    <div class="flex justify-between mb-7">
+      <div class="w-[40%] p-4 border shadow-xl rounded-lg">
+        <app-pie></app-pie>
       </div>
-      <div class="flex flex-wrap gap-y-7 justify-between items-center">
-        <div>
-          <div
-            class="w-[172px] h-[240px] bg-quiz-cover bg-contain p-3 flex items-end rounded-lg mb-2"
-          >
-            <div
-              class="bg-[#999999]/40 backdrop-blur-sm w-[157px] h-[69px] rounded-lg px-3 py-3 text-[white] text-[13px]"
-            >
-              <div class="flex mb-2">
-                <img class="w-5" src="../../assets/images/clock.png" alt="" />
-                <p class="ml-2">1 hour/60mins</p>
-              </div>
-              <div class="flex">
-                <img src="../../assets/images/eye.png" alt="" />
-                <p class="ml-3">4.2K</p>
-              </div>
-            </div>
-          </div>
-          <p class="font-bold mb-1">Master Html</p>
-          <p class="font-normal mb-1 text-[#1D2939]">
-            By Sarah Dawson <span></span>
-          </p>
+      <div class="w-[57%] p-4 border shadow-xl rounded-lg">
+        <app-bar></app-bar>
+      </div>
+    </div>
+    <div class="flex justify-between">
+      <div class="w-[50%] h-4 pt-10">
+       <app-calendar></app-calendar>
+      </div>
+      <div class="pt-10 w-[30%]">
+        <div class="flex justify-between items-center mb-6">
+          <p class="text-2xl font-semibold">Recent Quizzes</p>
+          <p class="text-[#0267FF] cursor-pointer" routerLink="/quizzes">See All</p>
         </div>
-        <div>
-          <div
-            class="w-[172px] h-[240px] bg-quiz-cover bg-contain p-3 flex items-end rounded-lg mb-2"
-          >
+        <div class="flex flex-wrap gap-y-7 justify-between items-center">
+          <div routerLink="/quizzes/{{quiz._id}}" class="cursor-pointer" *ngFor="let quiz of quizzes">
             <div
-              class="bg-[#999999]/40 backdrop-blur-sm w-[157px] h-[69px] rounded-lg px-3 py-3 text-[white] text-[13px]"
+              class="w-[172px] h-[240px] bg-quiz-cover bg-contain p-3 flex items-end rounded-lg mb-2"
             >
-              <div class="flex mb-2">
-                <img class="w-5" src="../../assets/images/clock.png" alt="" />
-                <p class="ml-2">1 hour/60mins</p>
-              </div>
-              <div class="flex">
-                <img src="../../assets/images/eye.png" alt="" />
-                <p class="ml-3">4.2K</p>
+              <div
+                class="bg-[#999999]/40 backdrop-blur-sm w-[157px] h-[69px] rounded-lg px-3 py-3 text-[white] text-[13px]"
+              >
+                <div class="flex mb-2">
+                  <img class="w-5" src="../../assets/images/clock.png" alt="" />
+                  <p class="ml-2">1 hour/60mins</p>
+                </div>
+                <div class="flex">
+                  <img src="../../assets/images/eye.png" alt="" />
+                  <p class="ml-3">4.2K</p>
+                </div>
               </div>
             </div>
+            <p class="font-bold mb-1">{{quiz.title}}</p>
+            <p class="font-normal mb-1 text-[#1D2939]">
+              By Sarah Dawson <span></span>
+            </p>
           </div>
-          <p class="font-bold mb-1">Master Html</p>
-          <p class="font-normal mb-1 text-[#1D2939]">
-            By Sarah Dawson <span></span>
-          </p>
-        </div>
-        <div>
-          <div
-            class="w-[172px] h-[240px] bg-quiz-cover bg-contain p-3 flex items-end rounded-lg mb-2"
-          >
-            <div
-              class="bg-[#999999]/40 backdrop-blur-sm w-[157px] h-[69px] rounded-lg px-3 py-3 text-[white] text-[13px]"
-            >
-              <div class="flex mb-2">
-                <img class="w-5" src="../../assets/images/clock.png" alt="" />
-                <p class="ml-2">1 hour/60mins</p>
-              </div>
-              <div class="flex">
-                <img src="../../assets/images/eye.png" alt="" />
-                <p class="ml-3">4.2K</p>
-              </div>
-            </div>
-          </div>
-          <p class="font-bold mb-1">Master Html</p>
-          <p class="font-normal mb-1 text-[#1D2939]">
-            By Sarah Dawson <span></span>
-          </p>
-        </div>
-        <div>
-          <div
-            class="w-[172px] h-[240px] bg-quiz-cover bg-contain p-3 flex items-end rounded-lg mb-2"
-          >
-            <div
-              class="bg-[#999999]/40 backdrop-blur-sm w-[157px] h-[69px] rounded-lg px-3 py-3 text-[white] text-[13px]"
-            >
-              <div class="flex mb-2">
-                <img class="w-5" src="../../assets/images/clock.png" alt="" />
-                <p class="ml-2">1 hour/60mins</p>
-              </div>
-              <div class="flex">
-                <img src="../../assets/images/eye.png" alt="" />
-                <p class="ml-3">4.2K</p>
-              </div>
-            </div>
-          </div>
-          <p class="font-bold mb-1">Master Html</p>
-          <p class="font-normal mb-1 text-[#1D2939]">
-            By Sarah Dawson <span></span>
-          </p>
         </div>
       </div>
     </div>
   </div>
-</div>
+</ng-template>
 
 <app-footer></app-footer>
