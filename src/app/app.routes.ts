@@ -1,5 +1,4 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { HomepageComponent } from './home/homepage/homepage.component';
 import { LoginComponent } from './login/login.component';
 import { ProfilepageComponent } from './profilepage/profilepage.component';
@@ -13,7 +12,7 @@ import { PasswordComponent } from './settings/password/password.component';
 import { QuizsettingsComponent } from './settings/quizsettings/quizsettings.component';
 import { SolutionsComponent } from './quizzes/solutions/solutions.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: '',
     component: HomepageComponent,
@@ -66,9 +65,3 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
-})
-export class AppRoutingModule {}
