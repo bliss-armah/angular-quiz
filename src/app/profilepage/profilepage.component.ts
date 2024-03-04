@@ -43,20 +43,12 @@ export class ProfilepageComponent implements OnInit, OnDestroy {
     this.isLoading = true;
 
     // Use observer object to handle next, error, and complete
-    this.subscription = this.dataStorageService.fetchQuizzes().subscribe({
-      next: (quizzes) => {
-        this.quizzes = quizzes.quiz;
-        console.log(this.quizzes);
-        this.isLoading = false;
-      },
-      error: (error) => {
-        console.error(error);
-        this.isLoading = false;
-      },
-      complete: () => {
-        // Handle any logic you need when the observable completes
-      }
-    });
+   this.dataStorageService.fetchQuizzes("")
+    this.subscription = this.dataStorageService.data$.subscribe((quizzes) => {
+      this.quizzes = quizzes?.quiz
+      this.isLoading = false
+    })
+
   }
 
   ngOnDestroy(): void {

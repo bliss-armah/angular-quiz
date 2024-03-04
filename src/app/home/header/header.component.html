@@ -12,7 +12,7 @@
   <ul
     class="hidden sm:flex items-center md:flex-row justify-between sm:w-[30%] text-[#0267FF]"
   >
-    <li>
+    <li (click)="toHome()" >
       <a
         routerLinkActive="active"
         routerLink=""
@@ -21,17 +21,12 @@
         >Home</a
       >
     </li>
-    <li>
+    <li (click)="toServices()">
       <a routerLinkActive="active" routerLink="/services" class="cursor-pointer"
         >Services</a
       >
     </li>
-    <li>
-      <a routerLinkActive="active" routerLink="/about" class="cursor-pointer"
-        >About Us</a
-      >
-    </li>
-    <li>
+    <li (click)="toContact()">
       <a routerLinkActive="active" routerLink="/contact" class="cursor-pointer"
         >Contact Us</a
       >
@@ -46,9 +41,9 @@
       Register
     </button>
   </div>
-  <div *ngIf="isAuthenticated" class="hidden sm:flex items-center" clickedOutside (clickedOutside)="clickedOutside()">
+  <div *ngIf="isAuthenticated" class="hidden sm:flex items-center"  (clickedOutside)="clickedOutside()">
     <div class="flex items-center cursor-pointer" (click)="onOpenMenu()">
-      <h2 class="text-[#0267FF] capitalize font-semibold">Hello John Doe</h2>
+      <h2 class="text-[#0267FF] capitalize font-semibold">Hello {{userName}}</h2>
       <img src="../../../assets/images/image2.png" alt="" class="w-11 ml-4" />
     </div>
     <div
@@ -57,7 +52,7 @@
     >
       <div class="flex items-center mb-4">
         <img src="../../../assets/images/image2.png" alt="" class="w-14" />
-        <h2 class="capitalize font-semibold ml-4">Hello John Doe</h2>
+        <h2 class="capitalize font-semibold ml-4">Hello {{userName}}</h2>
       </div>
       <div class="w-full">
         <div class="cursor-pointer mb-2" routerLinkActive="active" routerLink="/profile" class="cursor-pointer">Profile</div>

@@ -19,6 +19,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated = false;
   isMenuOpen = false;
   showHeader: boolean = true;
+  userName!: string
+
 
   constructor(private authService: AuthService,private dataShareService:DataShareService) {}
 
@@ -27,14 +29,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.showHeader = showHeader;
     });
 
-    this.userSub = this.authService.user.subscribe((user) => {
+    this.userSub = this.authService.user$.subscribe((user) => {
       this.isAuthenticated = !!user;
+      this.userName = user?.firstName ?? "";
     });
   }
 
   onLogout() {
     this.authService.logout();
-  }
+  } 
   onOpenMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
@@ -43,7 +46,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.isMenuOpen = false;
   }
 
+  toHome() {
+    document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' });
+  }
 
+  toServices(){
+    document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  toContact(){
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+  }
 
   ngOnDestroy() {
     this.userSub.unsubscribe();

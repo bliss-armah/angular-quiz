@@ -10,7 +10,11 @@
       alt="login.img"
     />
   </div>
-  <div class="absolute h-screen right-[400px] top-[50%]" *ngIf="isLoading" style="text-align: center">
+  <div
+    class="absolute h-screen right-[400px] top-[50%]"
+    *ngIf="isLoading"
+    style="text-align: center"
+  >
     <app-loader></app-loader>
   </div>
   <div class="w-[50%] flex flex-col justify-center items-center">
@@ -26,13 +30,12 @@
           >Sign Up</span
         >
       </p>
-      <form class="text-[#A6A6A6]" (ngSubmit)="onSubmit()" #f="ngForm">
-        <div
-          class=""
-          id="user-data"
-          ngModelGroup="userData"
-          #userData="ngModelGroup"
-        >
+      <form
+        class="text-[#A6A6A6]"
+        [formGroup]="signupForm"
+        (ngSubmit)="onSubmit()"
+      >
+        <div class="" id="user-data">
           <div *ngIf="createAccount" class="flex flex-col mb-6">
             <label for="name" class="text-[19.2px] font-semibold mb-[8px]"
               >Name</label
@@ -40,17 +43,18 @@
             <input
               type="text"
               id="name"
-              name="name"
-              required
-              ngModel
-              #name="ngModel"
+              formControlName="name"
               placeholder="John Doe"
               class="lg:w-[300px] p-2 h-[40px] border border-[#999999] rounded-md"
-              [ngClass]="{ 'border-red-500': !name.valid && name.touched }"
             />
-            <p *ngIf="!name.valid && name.touched" class="text-[tomato]">
-              User name is required!
-            </p>
+            <span
+              *ngIf="
+                !signupForm.get('username')?.valid &&
+                signupForm.get('username')?.touched
+              "
+              class="text-red-500"
+              >Username is required</span
+            >
           </div>
           <div class="flex flex-col mb-6">
             <label for="email" class="text-[19.2px] font-semibold mb-[8px]"
@@ -59,19 +63,21 @@
             <input
               type="email"
               id="email"
-              name="email"
-              email
-              required
-              ngModel
-              #email="ngModel"
+              formControlName="email"
               placeholder="johndoe@gmail.com"
               class="lg:w-[300px] p-2 h-[40px] border border-[#999999] text-black rounded-md"
-              [ngClass]="{ 'border-red-500': !email.valid && email.touched }"
+              [readonly]="isLoading"
             />
-            <p *ngIf="!email.valid && email.touched" class="text-[tomato]">
-              Email is required!
-            </p>
+            <span
+              *ngIf="
+                !signupForm.get('email')?.valid &&
+                signupForm.get('email')?.touched
+              "
+              class="text-red-500"
+              >Please enter a valid email!</span
+            >
           </div>
+
           <div class="flex flex-col mb-6">
             <label for="password" class="text-[19.2px] font-semibold mb-[8px]"
               >Password</label
@@ -79,23 +85,19 @@
             <input
               type="password"
               id="password"
-              name="password"
-              password
-              required
-              ngModel
-              #password="ngModel"
+              formControlName="password"
               placeholder="**************"
               class="lg:w-[300px] p-2 h-[40px] border border-[#999999] text-black rounded-md"
-              [ngClass]="{
-                'border-red-500': !password.valid && password.touched
-              }"
+              [readonly]="isLoading"
             />
-            <p
-              *ngIf="!password.valid && password.touched"
-              class="text-[tomato]"
+            <span
+              *ngIf="
+                !signupForm.get('password')?.valid &&
+                signupForm.get('password')?.touched
+              "
+              class="text-red-500"
+              >Password is required</span
             >
-              Password is required!
-            </p>
           </div>
         </div>
         <div
@@ -109,21 +111,11 @@
           </div>
           <p class="text-[#0267FF]">Forgot password?</p>
         </div>
-        <!-- <p
-          *ngIf="
-            (!email.valid && email.touched) ||
-            (!password.valid && password.touched)
-          "
-          class="w-[285px] text-[13.33px] text-[#FF4D4D] mb-6"
-        >
-          Oops! Your email or password appears to be incorrect. Please
-          double-check your login details and try again.
-        </p> -->
         <button
           type="submit"
           class="lg:w-[300px] p-2 h-[40px] bg-[#0267FF] rounded-md text-white mb-6"
-          [ngClass]="{ 'opacity-50': !f.valid }"
-          [disabled]="!f.valid"
+          [ngClass]="{ 'opacity-50': signupForm.invalid }"
+          [disabled]="signupForm.invalid"
         >
           {{ createAccount ? "Create Account" : " Log in" }}
         </button>

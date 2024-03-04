@@ -10,12 +10,14 @@
       than QuizMaster - the ultimate quiz platform! With a range of quizzes on
       any topic imaginable, QuizMaster makes learning fun and engaging.
     </div>
-    <button class="text-white font-semibold bg-[#0267FF] p-4">
+    <button class="text-white font-semibold bg-[#0267FF] p-4" (click)="onGoToQuiz()">
       Get Started <span class="font-semibold">></span>
     </button>
   </div>
 </div>
-<div class="text-center flex flex-col items-center justify-center mb-[108px]">
+<div
+id="services"
+ class="text-center flex flex-col items-center justify-center mb-[108px]">
   <h2 class="text-[47.78px] font-semibold mb-[34px]">Explore Our Services</h2>
   <p
     class="w-[408px] sm:w-[620px] md:w-[720px] lg:w-[960px] h-[108px] text-[19.2px] mb-[108px]"
@@ -102,7 +104,7 @@
       learning in one place with our user-friendly quiz app that guarantees a
       confident quiz-taking experience."
     </p>
-    <app-button [text]="'Start your quiz now'"></app-button>
+    <app-button [text]="'Start your quiz now'" (click)="onGoToQuiz()"></app-button>
   </div>
   <div>
     <img

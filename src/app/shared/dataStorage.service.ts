@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map,  } from 'rxjs';
+import { BehaviorSubject, Subject, map,  } from 'rxjs';
 import { Quizzes } from '../quizzes/quiz.model';
 import {  AllQuizQnP,  QuizQuestionsP } from '../types';
 
@@ -9,6 +9,9 @@ export class DataStorageService {
   constructor(private http: HttpClient) {}
   
   total: any = []
+  private dataSubject = new BehaviorSubject<any>(null);
+  public data$ = this.dataSubject.asObservable();
+
 
   sendAnswers(answers: any) {
     return this.http
@@ -19,19 +22,22 @@ export class DataStorageService {
         map((solutions) => {
           return solutions;
         })
-      );
+      )
   }
 
-  fetchQuizzes() {
-    return this.http
-      .get<Quizzes>('https://user-auth-server.onrender.com/api/v1/quiz')
-      .pipe(
-        map((quiz) => {
-          return quiz;
-        })
-      );
+  fetchQuizzes(subject: string) {
+    this.http
+      .get<Quizzes>(`https://user-auth-server.onrender.com/api/v1/quiz?subject=${subject}`)
+      .subscribe({
+        next: (data) => {
+          this.dataSubject.next(data);
+        },
+        error: (error) => {
+          console.error('Error Fetching Data:', error); // Log any errors
+        }
+      });
   }
-
+  
   fetchQuiz(id: string,page:number) {
     return this.http
       .get<AllQuizQnP>( `https://user-auth-server.onrender.com/api/v1/quiz/questions/${id}?page=${page}`)
@@ -39,7 +45,7 @@ export class DataStorageService {
         map((quiz) => {
 
           return quiz;
-        })
+        }) 
       );
   }
 
@@ -48,12 +54,9 @@ fetchQ(id: string) {
       .get<QuizQuestionsP>( `https://user-auth-server.onrender.com/api/v1/quiz/question/${id}`)
       .pipe(
         map((quiz) => {
-          console.log('',quiz);
           return quiz.quiz;
         })
       );
   }
-
-
 
 }

@@ -19,6 +19,5 @@ export class DataShareService {
     this.showHeaderSubject.next(showHeader);
   }
 
-
-
+  
 }

@@ -6,13 +6,14 @@ import { User } from './user.model';
 import { Router } from '@angular/router';
 
 export interface AuthResponseData {
-  user: { email: string };
+  user: { email: string; firstName: string, role: string};
   token: string;
 }
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  user = new BehaviorSubject<User | null>(null);
+  private user = new BehaviorSubject<User | null>(null);
+  public user$ = this.user.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -32,7 +33,12 @@ export class AuthService {
       )
       .pipe(
         tap((resData) => {
-          this.handleAuthentication(resData.user.email, resData.token);
+          this.handleAuthentication(
+            resData.user.email,
+            resData.user.firstName,
+            resData.user.role,
+            resData.token,
+          );
         }),
         catchError((error) => {
           console.error('Error in signUp:', error);
@@ -43,16 +49,13 @@ export class AuthService {
 
   logIn(email: string, password: string) {
     return this.http
-      .post<AuthResponseData>(
-        'https://user-auth-server.onrender.com/api/v1/user/login',
-        {
-          email,
-          password,
-        }
-      )
+      .post<AuthResponseData>('http://localhost:4000/api/v1/user/login', {
+        email,
+        password,
+      })
       .pipe(
         tap((resData) => {
-          this.handleAuthentication(resData.user.email, resData.token);
+          this.handleAuthentication(resData.user.email, resData.user.firstName, resData.token,resData.user.role);
         }),
         catchError((error) => {
           console.error('Error in login:', error);
@@ -63,10 +66,12 @@ export class AuthService {
 
   autoLogin() {
     const email = this.cookieService.get('email');
+    const firstName = this.cookieService.get('firstName');
+    const role = this.cookieService.get('role');
     const token = this.cookieService.get('token');
 
     if (email && token) {
-      const loadedUser = new User(email, token);
+      const loadedUser = new User(email, firstName, token,role);
       if (loadedUser.tokens) {
         this.user.next(loadedUser);
       }
@@ -80,12 +85,20 @@ export class AuthService {
     this.cookieService.delete('token');
   }
 
-  private handleAuthentication(email: string, token: string) {
-    const user = new User(email, token);
+  private handleAuthentication(
+    email: string,
+    firstName: string,
+    token: string,
+    role: string
+  ) {
+    const user = new User(email, firstName, token,role);
     this.user.next(user);
 
     // Set cookies
     this.cookieService.set('email', email);
     this.cookieService.set('token', token);
+    this.cookieService.set('firstName', firstName);
+    this.cookieService.set('role', role);
   }
 }
+ 
