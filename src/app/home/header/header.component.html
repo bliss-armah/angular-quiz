@@ -1,18 +1,23 @@
 <nav
-  class="flex sm:items-center md:flex-row sm:flex-row justify-between md:just px-[70px] py-[18px] shadow-lg relative z-10"
+  class="flex sm:items-center flex-row justify-between px-8 md:px-[70px] py-[18px] shadow-lg relative z-10"
   *ngIf="showHeader"
 >
   <img
-    (click)="onOpenMenu()"
+    (click)="toggleOptions()"
     class="sm:hidden cursor-pointer"
     src="../../../assets/images/humburger.png"
     alt=""
   />
-  <img class="cursor-pointer" routerLink="/" src="../../../assets/images/logo.svg" alt="" />
+  <img
+    class="cursor-pointer"
+    routerLink="/"
+    src="../../../assets/images/logo.svg"
+    alt=""
+  />
   <ul
     class="hidden sm:flex items-center md:flex-row justify-between sm:w-[30%] text-[#0267FF]"
   >
-    <li (click)="toHome()" >
+    <li (click)="toHome()">
       <a
         routerLinkActive="active"
         routerLink=""
@@ -41,9 +46,15 @@
       Register
     </button>
   </div>
-  <div *ngIf="isAuthenticated" class="hidden sm:flex items-center"  (clickedOutside)="clickedOutside()">
+  <div
+    *ngIf="isAuthenticated"
+    class="hidden sm:flex items-center"
+    (clickedOutside)="clickedOutside()"
+  >
     <div class="flex items-center cursor-pointer" (click)="onOpenMenu()">
-      <h2 class="text-[#0267FF] capitalize font-semibold">Hello {{userName}}</h2>
+      <h2 class="text-[#0267FF] capitalize font-semibold">
+        Hello {{ userName }}
+      </h2>
       <img src="../../../assets/images/image2.png" alt="" class="w-11 ml-4" />
     </div>
     <div
@@ -52,15 +63,29 @@
     >
       <div class="flex items-center mb-4">
         <img src="../../../assets/images/image2.png" alt="" class="w-14" />
-        <h2 class="capitalize font-semibold ml-4">Hello {{userName}}</h2>
+        <h2 class="capitalize font-semibold ml-4">Hello {{ userName }}</h2>
       </div>
       <div class="w-full">
-        <div class="cursor-pointer mb-2" routerLinkActive="active" routerLink="/profile" class="cursor-pointer">Profile</div>
+        <div
+          class="cursor-pointer mb-2"
+          routerLinkActive="active"
+          routerLink="/profile"
+          class="cursor-pointer"
+        >
+          Profile
+        </div>
         <div class="h-[1px] bg-gray-300 mb-2"></div>
-        <div class="cursor-pointer mb-2" routerLinkActive="active" routerLink="/settings">Account Settings</div>
+        <div
+          class="cursor-pointer mb-2"
+          routerLinkActive="active"
+          routerLink="/settings"
+        >
+          Account Settings
+        </div>
         <div class="h-[1px] bg-gray-300 mb-2"></div>
         <div class="cursor-pointer" (click)="onLogout()">Logout</div>
       </div>
     </div>
   </div>
 </nav>
+  <app-mininavoptions [showOptions]="showOptions"></app-mininavoptions>

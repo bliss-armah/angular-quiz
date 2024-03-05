@@ -1,6 +1,6 @@
-<div class="flex h-screen overflow-hidden">
-  <div class="absolute right-9 top-9 cursor-pointer" routerLink="/">Exit</div>
-  <div class="w-[50%]">
+<div class="flex h-screen overflow-hidden px-4 md:px-0">
+  <div class=" hidden md:absolute right-9 top-9 cursor-pointer" routerLink="/">Exit</div>
+  <div class="hidden md:block w-[50%]">
     <img
       src="{{
         createAccount
@@ -17,12 +17,12 @@
   >
     <app-loader></app-loader>
   </div>
-  <div class="w-[50%] flex flex-col justify-center items-center">
+  <div class="w-full  md:w-[50%] flex flex-col justify-center md:items-center">
     <div>
-      <h2 class="text-[39.81px] font-extrabold mb-11">
+      <h2 class="text-[39.81px] text-center font-extrabold mb-11">
         {{ createAccount ? "Create Account" : "Log in" }}
       </h2>
-      <p *ngIf="!createAccount" class="text-[#A6A6A6] mb-10">
+      <p *ngIf="!createAccount" class="text-[#A6A6A6] mb-10 text-center">
         New member?
         <span
           class="text-[#0267FF] cursor-pointer"
@@ -31,7 +31,7 @@
         >
       </p>
       <form
-        class="text-[#A6A6A6]"
+        class="text-[#A6A6A6] "
         [formGroup]="signupForm"
         (ngSubmit)="onSubmit()"
       >
@@ -45,7 +45,8 @@
               id="name"
               formControlName="name"
               placeholder="John Doe"
-              class="lg:w-[300px] p-2 h-[40px] border border-[#999999] rounded-md"
+              [disabled]="isLoading"
+              class=" w-full lg:w-[300px] p-2 h-[40px] border border-[#999999] rounded-md"
             />
             <span
               *ngIf="
@@ -65,7 +66,8 @@
               id="email"
               formControlName="email"
               placeholder="johndoe@gmail.com"
-              class="lg:w-[300px] p-2 h-[40px] border border-[#999999] text-black rounded-md"
+              [disabled]="isLoading"
+              class="w-full lg:w-[300px] p-2 h-[40px] border border-[#999999] text-black rounded-md"
               [readonly]="isLoading"
             />
             <span
@@ -113,7 +115,7 @@
         </div>
         <button
           type="submit"
-          class="lg:w-[300px] p-2 h-[40px] bg-[#0267FF] rounded-md text-white mb-6"
+          class="w-full lg:w-[300px] p-2 h-[40px] bg-[#0267FF] rounded-md text-white mb-6 "
           [ngClass]="{ 'opacity-50': signupForm.invalid }"
           [disabled]="signupForm.invalid"
         >

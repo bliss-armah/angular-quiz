@@ -49,7 +49,7 @@ export class AuthService {
 
   logIn(email: string, password: string) {
     return this.http
-      .post<AuthResponseData>('http://localhost:4000/api/v1/user/login', {
+      .post<AuthResponseData>('https://user-auth-server.onrender.com/api/v1/user/login', {
         email,
         password,
       })

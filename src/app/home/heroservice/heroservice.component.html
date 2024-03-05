@@ -1,23 +1,27 @@
 <div
   class="bg-cover bg-footer-texture sm:bg-hero-pattern h-[850px] pt-[149px] mb-[108px]"
 >
-  <div class="md:w-[860px] mx-auto text-center">
-    <div class="text-white text-[47.78px] font-extrabold mb-8">
+  <div class="w-[358px] md:w-[860px] mx-auto text-center">
+    <div class="text-white text-[27px] md:text-[47.78px] font-extrabold mb-8">
       Enjoy a User-Friendly Interface and Interactive Quiz Experience!
     </div>
-    <div class="text-white text-[19.2px] mb-8 md:w-[770px]">
+    <div class="text-white text-[16px] w-[358px] mb-8 md:w-[770px]">
       Want to expand your knowledge and challenge your brain? Look no further
       than QuizMaster - the ultimate quiz platform! With a range of quizzes on
       any topic imaginable, QuizMaster makes learning fun and engaging.
     </div>
-    <button class="text-white font-semibold bg-[#0267FF] p-4" (click)="onGoToQuiz()">
-      Get Started <span class="font-semibold">></span>
+    <button
+      class="text-white font-semibold bg-[#0267FF] p-4"
+      (click)="onGoToQuiz()"
+    >
+      Get Started <span class="font-semibold"></span>
     </button>
   </div>
 </div>
 <div
-id="services"
- class="text-center flex flex-col items-center justify-center mb-[108px]">
+  id="services"
+  class="text-center flex flex-col items-center justify-center mb-[108px]"
+>
   <h2 class="text-[47.78px] font-semibold mb-[34px]">Explore Our Services</h2>
   <p
     class="w-[408px] sm:w-[620px] md:w-[720px] lg:w-[960px] h-[108px] text-[19.2px] mb-[108px]"
@@ -91,44 +95,55 @@ id="services"
     </div>
   </div>
 </div>
+
 <div
   class="bg-[#F2F2F2] flex flex-col lg:flex-row justify-center items-center mb-[101px]"
 >
-  <div class="w-[325px] md:w-[571px] text-none mb-[101px] md:mb-0">
-    <h3 class="text-[33.18px] font-semibold mb-[37px]">
+  <div
+    class="w-[325px] md:w-[571px] text-center md:text-left mb-[101px] md:mb-0"
+  >
+    <h3 class="text-[27px] md:text-[33.18px] font-semibold mb-[37px]">
       Knowledge at Your Fingertips, Quiz with Confidence!
     </h3>
     <p class="mb-[37px]">
       Join our quiz app to expand your knowledge and challenge your skills with
-      engaging quizzes anytime, anywhere." Experience fun, excitement, and
+      engaging quizzes anytime, anywhere. Experience fun, excitement, and
       learning in one place with our user-friendly quiz app that guarantees a
-      confident quiz-taking experience."
+      confident quiz-taking experience.
     </p>
-    <app-button [text]="'Start your quiz now'" (click)="onGoToQuiz()"></app-button>
+    <app-button
+      [text]="'Start your quiz now'"
+      (click)="onGoToQuiz()"
+    ></app-button>
   </div>
+
   <div>
     <img
-      class="w-[390px] ml-[101px]"
+      class="w-[390px] md:ml-[101px]"
       src="../../../assets/images/laugh.png"
       alt=""
     />
   </div>
 </div>
-<div class="flex flex-col lg:flex-row justify-center items-center mb-[101px]">
+
+<div
+  class="flex flex-col-reverse lg:flex-row justify-center items-center mb-[101px]"
+>
   <div>
     <img class="w-[390px]" src="../../../assets/images/laugh2.png" alt="" />
   </div>
   <div
-    class="w-[325px] md:w-[571px] text-none md:ml-[101px] mb-[101px] md:mb-0"
+    class="w-[325px] md:w-[571px] text-center md:text-left md:ml-[101px] mb-[101px] md:mb-0"
   >
-    <h3 class="text-[33.18px] font-semibold mb-[37px]">
-      Knowledge at Your Fingertips, Quiz with Confidence!
+    <h3 class="text-[27px] md:text-[33.18px] font-semibold mb-[37px]">
+      Get Educational Advices and Tips From Our Professionals
     </h3>
     <p class="mb-[37px]">
-      Join our quiz app to expand your knowledge and challenge your skills with
-      engaging quizzes anytime, anywhere." Experience fun, excitement, and
-      learning in one place with our user-friendly quiz app that guarantees a
-      confident quiz-taking experience."
+      "Gain a competitive edge with our educational professionals. Get expert
+      advice and invaluable tips to enhance your learning journey. Unlock your
+      full potential and achieve academic success with their guidance. Don't
+      miss out on this opportunity to receive top-notch educational insights
+      from our trusted team."
     </p>
     <app-button [text]="'Sign up for Expert Advice'"></app-button>
   </div>

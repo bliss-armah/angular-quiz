@@ -57,16 +57,17 @@ export class LoginComponent implements OnInit {
 
     authObs.subscribe(
       (resData) => {
-        console.log(resData);
         this.isLoading = false;
         this.router.navigate(['/profile']);
+        this.signupForm.reset();
       },
       (error) => {
         console.log(error);
         this.isLoading = false;
+        this.signupForm.reset();
+
       }
     );
 
-    this.signupForm.reset();
 }
 }
