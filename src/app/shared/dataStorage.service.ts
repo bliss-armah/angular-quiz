@@ -16,7 +16,7 @@ export class DataStorageService {
   sendAnswers(answers: any) {
     return this.http
       .post(
-        'https://user-auth-server.onrender.com/api/v1/quiz/totalMarks',
+        'https://quiz-4dtk.onrender.com/api/v1/quiz/totalMarks',
         answers
       ).pipe(
         map((solutions) => {
@@ -27,7 +27,7 @@ export class DataStorageService {
 
   fetchQuizzes(subject: string) {
     this.http
-      .get<Quizzes>(`https://user-auth-server.onrender.com/api/v1/quiz?subject=${subject}`)
+      .get<Quizzes>(`https://quiz-4dtk.onrender.com/api/v1/quiz?subject=${subject}`)
       .subscribe({
         next: (data) => {
           this.dataSubject.next(data);
@@ -40,7 +40,7 @@ export class DataStorageService {
   
   fetchQuiz(id: string,page:number) {
     return this.http
-      .get<AllQuizQnP>( `https://user-auth-server.onrender.com/api/v1/quiz/questions/${id}?page=${page}`)
+      .get<AllQuizQnP>( `https://quiz-4dtk.onrender.com/api/v1/quiz/questions/${id}?page=${page}`)
       .pipe(
         map((quiz) => {
 
@@ -51,7 +51,7 @@ export class DataStorageService {
 
 fetchQ(id: string) {
   return this.http
-      .get<QuizQuestionsP>( `https://user-auth-server.onrender.com/api/v1/quiz/question/${id}`)
+      .get<QuizQuestionsP>( `https://quiz-4dtk.onrender.com/api/v1/quiz/question/${id}`)
       .pipe(
         map((quiz) => {
           return quiz.quiz;

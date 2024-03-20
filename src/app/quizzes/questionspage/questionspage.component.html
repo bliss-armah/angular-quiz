@@ -16,21 +16,15 @@
         <div class="w-[200px] h-[1px] bg-gray-300 mb-7"></div>
         <p class="mb-7">Subject</p>
         <div
-          *ngFor="
-            let subject of [
-              'General Knowledge',
-              'Master Html',
-              'Your Custom Subject'
-            ]
-          "
+        *ngFor="let subject of quizzes"
         >
           <input
             type="checkbox"
             [value]="subject"
-            [checked]="selectedSubjects.includes(subject)"
-            (change)="getQuizBySubject(subject)"
+            [checked]="selectedSubjects.includes(subject.subject)"
+            (change)="getQuizBySubject(subject.subject)"
           />
-          <label class="ml-2">{{ subject }}</label>
+          <label class="ml-2">{{ subject.subject }}</label>
         </div>
       </div>
     </div>

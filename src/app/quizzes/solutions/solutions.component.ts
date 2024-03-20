@@ -14,6 +14,7 @@ import { QuizbarComponent } from 'src/app/components/quizbar/quizbar.component';
 })
 export class SolutionsComponent implements OnInit {
   data: any;
+  isMobile: boolean = false;
 
   constructor(private dataShareService: DataShareService,private router: Router,private route: ActivatedRoute) {}
 

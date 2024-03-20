@@ -25,6 +25,7 @@ export class QuestionspageComponent implements OnInit, OnDestroy {
   quizzes: Quiz[] = [];
   subscription!: Subscription;
   selectedSubjects: string[] = [];
+  
 
   constructor(private dataStorageService: DataStorageService) {}
   ngOnInit(): void {

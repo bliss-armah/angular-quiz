@@ -24,7 +24,7 @@ export class AuthService {
   signUp(name: string, email: string, password: string) {
     return this.http
       .post<AuthResponseData>(
-        'https://user-auth-server.onrender.com/api/v1/user/signup',
+        'https://quiz-4dtk.onrender.com/api/v1/user/signup',
         {
           name,
           email,
@@ -49,7 +49,7 @@ export class AuthService {
 
   logIn(email: string, password: string) {
     return this.http
-      .post<AuthResponseData>('https://user-auth-server.onrender.com/api/v1/user/login', {
+      .post<AuthResponseData>('https://quiz-4dtk.onrender.com/api/v1/user/login', {
         email,
         password,
       })
